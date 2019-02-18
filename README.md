@@ -89,14 +89,12 @@ All data types are objects based on classes.
 
 ### Ruby Fundamentals
 
-### Types
+[Gist of examples](https://gist.github.com/DominicTremblay/95db442e4ff6c6d343b8616ed4468bd3)
 
-### Strings
+In the examples, we covered:
 
-#### Blocks
-
-#### Arrays
-
-#### Hashes
-
-#### Classes
+- Types
+- Strings
+- Blocks
+- Arrays
+- Hashes
