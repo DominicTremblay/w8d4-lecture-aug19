@@ -1,12 +1,25 @@
 class Player
 
+  # attr_reader :name
+  # attr_writer :name
+  attr_accessor :name
+  attr_reader :ap
   attr_accessor :hp
-  attr_reader :name
 
   def initialize(name)
-    @name =  name
+    @name = name
     @hp = 20
     @ap = 10
+  end
+
+  # getter
+  def name
+    @name
+  end
+
+  #setter
+  def name=(name)
+    @name=name
   end
 
   def dead?
@@ -15,14 +28,9 @@ class Player
 
   def attacks(ennemy)
     damage = rand(@ap) + 1
-    puts "#{name} attacks #{ennemy.name}"
-    ennemy.takes_damage(damage)
+    puts "#{name} is attacking #{ennemy.name}"
+    puts "#{ennemy.name} is taking #{damage} points of damage"
+    ennemy.hp -= damage
   end
-  
-  def takes_damage(pts)
-    puts "#{name} takes #{pts} points of damage"
-    self.hp -= pts
-  end
-
 
 end
