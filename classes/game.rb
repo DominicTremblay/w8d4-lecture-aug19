@@ -2,54 +2,43 @@ require './player'
 
 class Game
 
-  def initialize()
-    @jedis = [Player.new('Ray'), Player.new('Kylo Ren'), Player.new('Obi Wan'), Player.new('Yoda')].shuffle!
+  def initialize
+    @jedis = [Player.new("Skywalker"), Player.new("Yoda"), Player.new("Anakin")].shuffle
     @round = 1
   end
 
-  def getEnnemy(attacking)
-    jedis_alive.select{|jedi| jedi != attacking}.sample
-  end
-
-
-  def jedis_alive
-    @jedis.select{|jedi| !jedi.dead? }
-  end
-
   def game_over
-    jedis_alive.count ==   1  
+    @jedis.select{|jedi| jedi.dead? }.count > 1
   end
 
-  def game_status
-  
-    puts "--------------------"
-    @jedis.each{|jedi| print " #{jedi.name} HP: #{jedi.dead? ? 'Dead' : jedi.hp}"}
-    puts ""
-    puts "--------------------"
+  def alive_jedis
+    @jedis.select{|jedi| !jedi.dead?}
+  end
 
+  def get_ennemy(attacking_jedi)
+    alive_jedis.select{|jedi| jedi != attacking_jedi}.sample
   end
 
   def run
+    while (!game_over) do
 
-
-    while !game_over do
-
-      puts "--------------------"
-      puts "     Round ##{@round}"
-      puts "--------------------"
+      puts '-----------------'
+      puts "ROUND: #{@round}"
 
       attacking_jedi = @jedis.first
-      ennemy_jedi = getEnnemy(attacking_jedi)
+      ennemy_jedi = get_ennemy(attacking_jedi)
 
       attacking_jedi.attacks(ennemy_jedi)
-      game_status
+
+      puts "------- STATUS -----------"
+      @jedis.each{|jedi| puts "Name: #{jedi.name} HP: #{jedi.dead? ? "DEAD" : jedi.hp}"}
 
 
-      @round += 1
+      @round+=1
+      @jedis.rotate!
       sleep 1
-
     end
-  end
 
+  end
 
 end
